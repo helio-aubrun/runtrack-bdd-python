@@ -1,0 +1,1 @@
+DELETE FROM etudient WHERE nom = 'Doe' AND prenom = 'John';
