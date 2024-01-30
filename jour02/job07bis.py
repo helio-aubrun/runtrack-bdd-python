@@ -1,6 +1,6 @@
 import mysql.connector
 
-class Salarie:
+class Employe:
 
     def __init__(self):
         self.conn = mysql.connector.connect(
@@ -11,28 +11,28 @@ class Salarie:
         )
         self.cursor = self.conn.cursor()
 
-    def create_salarie(self, nom, prenom, salaire, id_service):
+    def create_employe(self, nom, prenom, salaire, id_service):
         query = "INSERT INTO employe (nom, prenom, salaire, id_service) VALUES (%s, %s, %s, %s)"
         values = (nom, prenom, salaire, id_service)
         self.cursor.execute(query, values)
         self.conn.commit()
 
-    def read_salarie(self, salaire_min):
+    def read_employe(self, salaire_min):
         query = "SELECT * FROM employe WHERE salaire > %s"
         values = (salaire_min,)
         self.cursor.execute(query, values)
         result = self.cursor.fetchall()
         return result
 
-    def update_salarie(self, salarie_id, new_salaire):
+    def update_employe(self, employe_id, new_salaire):
         query = "UPDATE employe SET salaire = %s WHERE id = %s"
-        values = (new_salaire, salarie_id)
+        values = (new_salaire, employe_id)
         self.cursor.execute(query, values)
         self.conn.commit()
 
-    def delete_salarie(self, salarie_id):
+    def delete_employe(self, employe_id):
         query = "DELETE FROM employe WHERE id = %s"
-        values = (salarie_id,)
+        values = (employe_id,)
         self.cursor.execute(query, values)
         self.conn.commit()
 
@@ -40,15 +40,15 @@ class Salarie:
         self.cursor.close()
         self.conn.close()
 
-salarie_manager = Salarie()
+employe_manager = Employe()
 
-salarie_manager.create_salarie("MAUl", "Nance", 4100.00, 2)
+employe_manager.create_employe("MAUl", "Nance", 4100.00, 2)
 
-result = salarie_manager.read_salarie(3000.00)
+result = employe_manager.read_employe(3000.00)
 print(result)
 
-salarie_manager.update_salarie(3, 3000.00)
+employe_manager.update_employe(3, 3000.00)
 
-salarie_manager.delete_salarie(4)
+employe_manager.delete_employe(4)
 
-salarie_manager.close_connection()
+employe_manager.close_connection()
